@@ -1,6 +1,6 @@
 {
   "name": "@sucint/core",
-  "version": "1.0.0",
+  "version": "0.1.1",
   "description": "",
   "main": "src/index.js",
   "scripts": {
@@ -20,5 +20,8 @@
     "jest": "^27.4.7",
     "prettier": "^2.5.1"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "publishConfig": {
+    "access": "public"
+  }
 }

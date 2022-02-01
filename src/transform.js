@@ -5,6 +5,26 @@ const isArrayLike = require('./isArrayLike');
 const isObject = require('./isObject');
 const len = require('./len');
 
+function toValue(str) {
+  if (str === undefined || str === null) {
+    return str;
+  }
+  if (str.startsWith('"') && str.endsWith('"')) {
+    return str.slice(1, -1);
+  }
+  if (str === 'true') {
+    return true;
+  }
+  if (str === 'false') {
+    return false;
+  }
+  // eslint-disable-next-line no-restricted-globals
+  if (isNaN(str)) {
+    return str;
+  }
+  return Number(str);
+}
+
 function transformFromObj(input, src) {
   if (isArrayLike(input)) {
     const l = len(input);
@@ -27,7 +47,9 @@ function transformFromObj(input, src) {
       return input.slice(1);
     }
     if (input.startsWith('@')) {
-      return getAtPath(src, input.slice(1));
+      const tokens = input.split('||').map((t) => t.trim());
+      const defValue = toValue(tokens[1]);
+      return getAtPath(src, tokens[0].slice(1)) || defValue;
     }
   }
   return input;

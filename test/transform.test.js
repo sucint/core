@@ -49,4 +49,104 @@ describe('transform', () => {
     const actual = transform(input, transformation);
     expect(actual).toEqual(expected);
   });
+  it('Should use default values that are strings', () => {
+    const input = {
+      name: 'Jesús',
+    };
+
+    const transformation = {
+      personalData: {
+        name: '@name',
+        surname: '@surname || Doe',
+      },
+    };
+    const expected = {
+      personalData: {
+        name: 'Jesús',
+        surname: 'Doe',
+      },
+    };
+    const actual = transform(input, transformation);
+    expect(actual).toEqual(expected);
+  });
+  it('Should use default values that are integers', () => {
+    const input = {
+      name: 'Jesús',
+    };
+
+    const transformation = {
+      personalData: {
+        name: '@name',
+        age: '@age || 45',
+      },
+    };
+    const expected = {
+      personalData: {
+        name: 'Jesús',
+        age: 45,
+      },
+    };
+    const actual = transform(input, transformation);
+    expect(actual).toEqual(expected);
+  });
+  it('Should use default values that are float', () => {
+    const input = {
+      name: 'Jesús',
+    };
+
+    const transformation = {
+      personalData: {
+        name: '@name',
+        age: '@age || 45.4',
+      },
+    };
+    const expected = {
+      personalData: {
+        name: 'Jesús',
+        age: 45.4,
+      },
+    };
+    const actual = transform(input, transformation);
+    expect(actual).toEqual(expected);
+  });
+  it('Should use default values that are strings surronded by double quotes', () => {
+    const input = {
+      name: 'Jesús',
+    };
+
+    const transformation = {
+      personalData: {
+        name: '@name',
+        age: '@age || "45.4"',
+      },
+    };
+    const expected = {
+      personalData: {
+        name: 'Jesús',
+        age: '45.4',
+      },
+    };
+    const actual = transform(input, transformation);
+    expect(actual).toEqual(expected);
+  });
+  it('Should use default values that are booleans', () => {
+    const input = {
+      name: 'Jesús',
+    };
+
+    const transformation = {
+      personalData: {
+        name: '@name',
+        checked: '@age || true',
+      },
+    };
+    const expected = {
+      personalData: {
+        name: 'Jesús',
+        checked: true,
+      },
+    };
+    const actual = transform(input, transformation);
+    expect(actual).toEqual(expected);
+  });
 });
